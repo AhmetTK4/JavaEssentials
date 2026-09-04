@@ -1,23 +1,23 @@
-# Gerçek iş senaryolarıyla 5 Java Stream pattern'i
+# 5 Java Stream Patterns for Real-World Business Scenarios
 
 Java 21 • Spring Boot 3.5.13 • Maven • JUnit 5 • Mockito
 
-Medium yazısına temel olacak çalıştırılabilir eğitim projesi. Makale içermez. “En sık kullanılan” ifadesi istatistiksel bir sıralama değildir; seçilen beş pattern yaygın uygulama ihtiyaçlarını ve farklı Stream araçlarını öğretir.
+A runnable learning project built to accompany a Medium article. The article itself is not included. “Most commonly used” is not a statistical ranking: these five patterns demonstrate common application needs and different Stream tools.
 
-## Çalıştırma
+## Running the Application
 
-JDK **21** ve Maven **3.6.3+** kurulu olmalı. `JAVA_HOME` JDK 21'i göstermeli; `mvn -version` ile doğrulayın.
+Install JDK **21** and Maven **3.6.3+**. Make sure `JAVA_HOME` points to JDK 21; check with `mvn -version`.
 
 ```sh
 mvn clean verify
 mvn spring-boot:run
-# Alternatif:
+# Alternative:
 java -jar target/stream-patterns-1.0.0.jar
 ```
 
-Sunucu: `http://localhost:8080`. Harici servis, veritabanı veya kimlik bilgisi gerekmez.
+Server: `http://localhost:8080`. No external services, database, or credentials are required.
 
-## Katmanlar
+## Architecture
 
 ```text
 HTTP → ItemController → ItemService → ItemProvider
@@ -25,46 +25,47 @@ HTTP → ItemController → ItemService → ItemProvider
                       └─ ItemView / CategorySummary / Availability DTOs → JSON
 ```
 
-Controller HTTP parametrelerini bağlar ve doğrular. Servis iş kuralları ile Stream işlemlerini içerir. Provider değiştirilebilir veri kaynağı sözleşmesidir; üretimde veritabanı adaptörüyle değiştirilebilir. Fake kaynak uygulamanın çalışması içindir; Mockito mock'ları yalnızca testlerde kullanılır. Constructor injection vardır.
+The controller binds and validates HTTP parameters. The service contains the business rules and Stream operations. The provider defines a replaceable data-source contract and can be implemented by a database adapter in a production application. The fake source supplies data at runtime; Mockito mocks are used only in tests. Dependencies use constructor injection.
 
-## Beş senaryo
+## Five Scenarios
 
-| Endpoint | Pattern | İş ihtiyacı | JSON |
+| Endpoint | Pattern | Business Need | JSON |
 |---|---|---|---|
-| GET `/api/items/catalog?maxPrice=300` | filter + map | Satılabilir ürünleri bütçeye göre DTO'ya dönüştürme | array |
-| GET `/api/items/inventory` | groupingBy + collectingAndThen + sum/reduce | Kategori bazında stok değerleme | map of objects |
-| GET `/api/items/availability` | partitioningBy + mapping | Aktif ürünleri stok durumuna göre ayırma | object with arrays |
-| GET `/api/items/top?limit=3` | sorted + limit | Satılabilir en pahalı ilk N ürün | array |
-| GET `/api/items/tags` | flatMap + distinct + sorted | İç içe etiketlerden benzersiz filtre seçenekleri | string array |
+| GET `/api/items/catalog?maxPrice=300` | filter + map | Select purchasable products within a budget and map them to DTOs | array |
+| GET `/api/items/inventory` | groupingBy + collectingAndThen + sum/reduce | Calculate inventory value by category | map of objects |
+| GET `/api/items/availability` | partitioningBy + mapping | Split active products by stock availability | object with arrays |
+| GET `/api/items/top?limit=3` | sorted + limit | Return the N most expensive purchasable products | array |
+| GET `/api/items/tags` | flatMap + distinct + sorted | Build unique filter options from nested tags | string array |
 
-`toMap` yerine `partitioningBy` seçildi: kategori bazında gruplama zaten map sonucunu gösteriyor, partitioning ise iki iş kümesini tek geçişte üretmeyi öğretiyor. `reduce`, kategori değerlemesine dahil edildi. Para için `double` kullanan `summaryStatistics` yerine `BigDecimal` toplamı tercih edildi.
+`partitioningBy` was chosen over `toMap`: category grouping already demonstrates a map result, while partitioning demonstrates collecting items into two business groups in one collection pass. `reduce` is included in category valuation. Money is summed using `BigDecimal` rather than double-based summary statistics.
 
-## Veri ve iş kuralları
+## Data and Business Rules
 
-Fiyatlar tek para birimindedir: USD. `inventoryValue` birim fiyat × stok toplamıdır; satış geliri değildir. Para iki ondalık haneyle tutulur, kesirli cent reddedilir ve yuvarlama yapılmaz. Stok toplamı `long` olduğundan `int` taşması önlenir.
+All prices use a single currency: USD. `inventoryValue` is the sum of unit price × stock for each product; it is not sales revenue. Monetary values have two decimal places, fractional cents are rejected, and no rounding is performed. Stock totals use `long` to avoid overflowing an `int` total.
 
-| ID | Ürün | Kategori | Fiyat | Stok | Aktif |
+| ID | Product | Category | Price | Stock | Active |
 |---|---|---|---:|---:|---|
-| 1 | Laptop | Electronics | 1200.00 | 3 | evet |
-| 2 | Mouse | Electronics | 25.50 | 0 | evet |
-| 3 | Desk | Furniture | 300.00 | 5 | evet |
-| 4 | Chair | Furniture | 150.00 | 2 | hayır |
-| 5 | Monitor | Electronics | 300.00 | 4 | evet |
-| 6 | Notebook | Stationery | 5.00 | 10 | evet |
+| 1 | Laptop | Electronics | 1200.00 | 3 | yes |
+| 2 | Mouse | Electronics | 25.50 | 0 | yes |
+| 3 | Desk | Furniture | 300.00 | 5 | yes |
+| 4 | Chair | Furniture | 150.00 | 2 | no |
+| 5 | Monitor | Electronics | 300.00 | 4 | yes |
+| 6 | Notebook | Stationery | 5.00 | 10 | yes |
 
-Tüm endpointler pasif ürünleri dışlar. Catalog ve top ayrıca sıfır stoklu ürünleri dışlar; etiketler sıfır stoklu aktif ürünlerden de gelir. Catalog ve availability ID artan sırasındadır. Top fiyat azalan, eşit fiyatlarda ID artan sırasındadır. Etiketler büyük/küçük harfe duyarlı olarak tekilleştirilir ve doğal String sırasıyla döner. Kategori anahtarları TreeMap ile sıralıdır; istemci JSON object anahtar sırasına güvenmemelidir.
+All endpoints exclude inactive products. Catalog and top also exclude products with zero stock; tags include those from active products with zero stock. Catalog and availability use ascending ID order. Top uses descending price order, then ascending ID for equal prices. Tags are deduplicated case-sensitively and returned in natural String order. Category keys are sorted using TreeMap; clients should not depend on JSON object key order.
 
-Provider null olmayan, null eleman içermeyen ve benzersiz ürün ID'li bir snapshot döndürür. Kategori ve etiket tekrarları geçerlidir; etiket tekrarları tekilleştirilir, aynı kategorideki farklı ürünler toplamda korunur. Aynı ürün ID'sinin tekrar gelmesi provider sözleşmesi ihlalidir; servis bunu sessizce birleştirmez. Domain ve fake veri listeleri dışarıdan değiştirilemez.
+The provider returns a non-null snapshot with no null elements and unique product IDs. Repeated categories and tags are valid: duplicate tags are removed, while different products in the same category remain part of the totals. Repeated product IDs violate the provider contract; the service does not silently merge them. The domain's tag lists and the fake provider's data list cannot be modified externally.
 
-## Request ve response örnekleri
+## Request and Response Examples
 
-Bu beş okuma işlemi GET'tir; request body yoktur. Filtreler query parametresidir, response body JSON'dur.
+All five read operations use GET; they have no request body. Filters are query parameters, and response bodies are JSON.
 
-### 1. Bütçeye uygun katalog
+### 1. Catalog Within a Budget
 
 ```sh
 curl -s 'http://localhost:8080/api/items/catalog?maxPrice=300'
 ```
+
 ```json
 [
   {"id":3,"name":"Desk","price":300.00},
@@ -73,13 +74,14 @@ curl -s 'http://localhost:8080/api/items/catalog?maxPrice=300'
 ]
 ```
 
-`maxPrice` dahil sınırdır; minimum 0, varsayılan 1000000. Sıfır fiyatlı ürün geçerlidir.
+`maxPrice` is an inclusive upper bound; minimum 0, default 1000000. Products with a zero price are valid.
 
-### 2. Kategori stok özeti
+### 2. Inventory Summary by Category
 
 ```sh
 curl -s 'http://localhost:8080/api/items/inventory'
 ```
+
 ```json
 {
   "Electronics":{"itemCount":3,"totalUnits":7,"inventoryValue":4800.00},
@@ -88,13 +90,14 @@ curl -s 'http://localhost:8080/api/items/inventory'
 }
 ```
 
-`itemCount` stok miktarı değil, aktif ürün sayısıdır; sıfır stoklu Mouse sayılır. Pasif Chair sayılmaz.
+`itemCount` counts active products, not stock units. Mouse is counted despite having zero stock. The inactive Chair is excluded.
 
-### 3. Stok durumuna göre ayırma
+### 3. Partition by Availability
 
 ```sh
 curl -s 'http://localhost:8080/api/items/availability'
 ```
+
 ```json
 {
   "available":[
@@ -107,11 +110,12 @@ curl -s 'http://localhost:8080/api/items/availability'
 }
 ```
 
-### 4. En pahalı ilk N ürün
+### 4. Top N Most Expensive Products
 
 ```sh
 curl -s 'http://localhost:8080/api/items/top?limit=3'
 ```
+
 ```json
 [
   {"id":1,"name":"Laptop","price":1200.00},
@@ -120,22 +124,23 @@ curl -s 'http://localhost:8080/api/items/top?limit=3'
 ]
 ```
 
-`limit`: 1–100, varsayılan 3. Veri sayısından büyük limit tüm uygun ürünleri döndürür.
+`limit`: 1–100, default 3. A limit larger than the number of eligible products returns all eligible products.
 
-### 5. Benzersiz etiketler
+### 5. Unique Tags
 
 ```sh
 curl -s 'http://localhost:8080/api/items/tags'
 ```
+
 ```json
 ["accessory","display","home","portable","work"]
 ```
 
-Monitor içindeki iki `display` ve ürünler arasında tekrar eden `work` bir kez döner. Etiketsiz Notebook işleme uygundur.
+The two occurrences of `display` within Monitor and the repeated `work` tags across products each appear once. Notebook's empty tag list is handled normally.
 
-### Boş sonuçlar ve hatalar
+### Empty Results and Errors
 
-Kaynak boşsa veya yalnızca pasif ürün içeriyorsa: catalog/top/tags `[]`, inventory `{}`, availability `{"available":[],"unavailable":[]}` döner; HTTP 200.
+If the source is empty or contains only inactive products, catalog/top/tags return `[]`, inventory returns `{}`, and availability returns `{"available":[],"unavailable":[]}`, all with HTTP 200.
 
 ```sh
 curl -i 'http://localhost:8080/api/items/top?limit=0'
@@ -143,24 +148,24 @@ curl -i 'http://localhost:8080/api/items/catalog?maxPrice=-1'
 curl -i 'http://localhost:8080/api/items/top?limit=abc'
 ```
 
-Geçersiz değer/tip HTTP 400 üretir. Spring MVC Problem Details açıktır; hata mesajı metni Spring sürümüne bağlıdır. Provider hatası boş başarı sonucuna çevrilmez.
+Invalid values or types produce HTTP 400. Spring MVC Problem Details is enabled; error-message wording depends on the Spring version. Provider failures are not converted into successful empty results.
 
-## Test yaklaşımı
+## Testing Approach
 
-- Service: Mockito ile provider izole edilir; sınır fiyat, ücretsiz ürün, pasif/sıfır stok, ondalık doğruluk, tekrarlanan kategori/etiket, sıralama eşitliği, int sınırını aşan stok toplamı, boş veri ve provider hatası test edilir.
-- Etkileşimler: başarılı çağrı başına provider bir kez; geçersiz servis girdisinde sıfır çağrı; beklenmeyen etkileşimler reddedilir.
-- Controller: `@WebMvcTest`, `MockMvc`, `@MockitoBean` ile JSON şekilleri, parametre bağlama, varsayılanlar, sıra ve HTTP 400 kontrolleri yapılır. Geçersiz HTTP girdisinde servis çağrılmaz.
-- Integration: gerçek rastgele portta sunucu başlar; HTTP → controller → service → fake provider zinciri sınanır.
-- Domain: savunmacı kopyalama, negatif değerler ve kesirli cent davranışı sınanır.
+- **Service:** Mockito isolates the provider. Tests cover boundary prices, free products, inactive/zero-stock products, decimal precision, repeated categories/tags, ordering ties, stock totals exceeding the int range, empty input, and provider failures.
+- **Interactions:** The provider is called once per successful service call and never for invalid service arguments. Unexpected additional interactions are rejected.
+- **Controller:** `@WebMvcTest`, `MockMvc`, and `@MockitoBean` verify JSON shapes, parameter binding, defaults, ordering, and HTTP 400 responses. Invalid HTTP input does not invoke the service.
+- **Integration:** A real server starts on a random port to test the HTTP → controller → service → fake provider chain.
+- **Domain:** Tests verify defensive copying, negative values, and fractional-cent behavior.
 
-Test raporları: `target/surefire-reports/`. Ortamdaki doğrulama sonucu için `VERIFICATION.md` dosyasına bakın.
+Test reports: `target/surefire-reports/`. See [VERIFICATION.md](VERIFICATION.md) for the recorded verification results.
 
-## Tasarım sınırları
+## Design Limitations
 
-Bu küçük in-memory eğitim verisidir. Büyük veri kümelerinde filtre/sıralama/top-N ve uygun aggregation işlemleri veritabanına taşınmalı, sayfalama uygulanmalıdır. `sorted` O(n log n), diğer temel işlemler yaklaşık O(n)'dir. Kategori collector'ü öğretici açıklık için ara listeler üretir. Paralel stream gerektiren ölçülmüş bir ihtiyaç yoktur. Kimlik doğrulama, veri yazma ve kalıcı depolama bu örneğin kapsamında değildir.
+This is a small in-memory learning dataset. For large datasets, move filtering, sorting, top-N selection, and suitable aggregations to the database and introduce pagination. Sorting typically costs O(n log n); filtering, mapping, and flattening are generally linear in the number of elements processed. The category collector creates intermediate lists for teaching clarity. There is no measured need for parallel streams. Authentication, data writes, and persistent storage are outside the scope of this example.
 
-## Resmî kaynaklar
+## Official References
 
-- [Spring Boot 3.5 sistem gereksinimleri](https://docs.spring.io/spring-boot/3.5/system-requirements.html)
+- [Spring Boot 3.5 System Requirements](https://docs.spring.io/spring-boot/3.5/system-requirements.html)
 - [Java 21 Stream API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Stream.html)
 - [Java 21 Collectors](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html)
