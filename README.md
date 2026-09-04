@@ -1,0 +1,75 @@
+# Java Essentials ☕
+
+**Java fundamentals, explained through practical code.**
+
+A growing collection of examples and small projects accompanying my Medium articles about Java. This repository connects concepts with working code, showing how Java features can solve everyday development problems.
+
+## About
+
+Understanding a feature is one thing; knowing when and how to use it is another.
+
+Java Essentials brings together focused examples that you can explore, run, and modify. Some examples cover a single language concept, while others put several concepts together in a small application.
+
+The goal is to make Java easier to understand through clear implementations, meaningful use cases, and tests where they help explain the behavior.
+
+## Topics
+
+The collection will grow alongside new articles, exploring topics such as:
+
+- **Core Java** — language fundamentals, object-oriented programming, immutability, and generics
+- **Collections** — choosing and using lists, sets, and maps
+- **Streams and lambdas** — filtering, mapping, grouping, sorting, and aggregation
+- **Exception handling** — handling failures and designing clear error flows
+- **Concurrency** — threads, synchronization, and concurrent programming concepts
+- **Modern Java** — records, pattern matching, and other language improvements
+- **Testing** — verifying behavior with JUnit and Mockito
+
+Some projects may use Spring Boot to demonstrate Java concepts through realistic application scenarios.
+
+## Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/AhmetTK4/JavaEssentials.git
+cd JavaEssentials
+```
+
+Open the example or project you want to explore and follow its README for prerequisites, build instructions, and usage examples.
+
+Java versions and build tools may differ between projects. Check the individual project requirements before running the code.
+
+## Code and Articles
+
+The articles explain the reasoning; the code gives you something to experiment with.
+
+As the collection grows, project documentation will connect examples with their related Medium articles and describe the concepts, design choices, and expected behavior.
+
+You can use this repository to:
+
+- Follow along while reading an article
+- Experiment with inputs and edge cases
+- Compare different ways of solving a problem
+- Run tests to understand the intended behavior
+- Revisit a concept through a concrete example
+
+## Approach
+
+Examples aim to keep the main concept easy to see:
+
+- Clear names and focused implementations
+- Practical scenarios with explicit assumptions
+- Tests for meaningful behavior and edge cases
+- Explanations of relevant trade-offs
+
+These are learning projects. Where an example simplifies a production concern, its documentation should make that limitation clear.
+
+## Feedback and Contributions
+
+Found a bug, an unclear explanation, or a useful alternative?
+
+Feel free to open an issue or submit a pull request. Suggestions for future Java topics are welcome too.
+
+---
+
+Written and maintained by [AhmetTK4](https://github.com/AhmetTK4).
