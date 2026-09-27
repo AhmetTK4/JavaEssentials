@@ -26,6 +26,10 @@ The collection will grow alongside new articles, exploring topics such as:
 
 Some projects may use Spring Boot to demonstrate Java concepts through realistic application scenarios.
 
+## Examples
+
+- [Transactional events](transactional-events/README.md) — Spring’s `AFTER_COMMIT` lifecycle, the missing-audit-write problem, `REQUIRES_NEW`, atomic audit writes, and the atomic write portion of a transactional outbox. Includes complete JPA entities, repositories, commit/rollback tests, and reference PostgreSQL DDL. Requires Java 21 and Maven; tests use H2 without Docker.
+
 ## Getting Started
 
 Clone the repository:
