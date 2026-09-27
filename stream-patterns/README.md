@@ -1,5 +1,8 @@
 # 5 Java Stream Patterns for Real-World Business Scenarios
 
+Companion article: [5 Practical Java Stream Patterns with Spring Boot and Java 21](https://medium.com/@ahmettemelkundupoglu/5-practical-java-stream-patterns-with-spring-boot-and-java-21-a7b6dae616b7).
+
+
 Java 21 • Spring Boot 3.5.13 • Maven • JUnit 5 • Mockito
 
 A runnable learning project built to accompany a Medium article. The article itself is not included. “Most commonly used” is not a statistical ranking: these five patterns demonstrate common application needs and different Stream tools.
