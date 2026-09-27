@@ -46,7 +46,10 @@ Java versions and build tools may differ between projects. Check the individual 
 
 ## Code and Articles
 
-Find my writing on [Medium](https://medium.com/@ahmettemelkundupoglu). Each example links to its companion article when published.
+Published companion articles:
+
+- [5 Practical Java Stream Patterns with Spring Boot and Java 21](https://medium.com/@ahmettemelkundupoglu/5-practical-java-stream-patterns-with-spring-boot-and-java-21-a7b6dae616b7) — [code and tests](stream-patterns/README.md)
+- [Spring’s @TransactionalEventListener: Why Your Code Runs but Your Data Doesn’t Save](https://medium.com/@ahmettemelkundupoglu/springs-transactionaleventlistener-why-your-code-runs-but-your-data-doesn-t-save-7d6e84710c40) — [code and tests](transactional-events/README.md)
 
 The articles explain the reasoning; the code gives you something to experiment with.
 

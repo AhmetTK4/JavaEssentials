@@ -1,5 +1,8 @@
 # Transactional events: after commit, independent writes, and the outbox
 
+Companion article: [Spring’s @TransactionalEventListener: Why Your Code Runs but Your Data Doesn’t Save](https://medium.com/@ahmettemelkundupoglu/springs-transactionaleventlistener-why-your-code-runs-but-your-data-doesn-t-save-7d6e84710c40).
+
+
 Companion code for **Spring’s @TransactionalEventListener: Why Your Code Runs but Your Data Doesn’t Save**.
 
 This standalone Spring Boot example uses Java 21 and JPA. Tests use an in-memory H2 database, so Docker and PostgreSQL are not required. The Boot version matches the existing `stream-patterns` project.
