@@ -82,3 +82,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, verification commands, and the
 ---
 
 Written and maintained by [AhmetTK4](https://github.com/AhmetTK4).
+
+## License
+
+[MIT](LICENSE) — Copyright (c) 2026 Ahmet Temel Kundupoğlu.
