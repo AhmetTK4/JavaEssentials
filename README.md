@@ -28,6 +28,7 @@ Some projects may use Spring Boot to demonstrate Java concepts through realistic
 
 ## Examples
 
+- [Stream patterns](stream-patterns/README.md) — Five Java Stream patterns applied to an API, with explicit business rules, HTTP examples, and service/controller/integration tests. Requires Java 21 and Maven; no external services are needed.
 - [Transactional events](transactional-events/README.md) — Spring’s `AFTER_COMMIT` lifecycle, the missing-audit-write problem, `REQUIRES_NEW`, atomic audit writes, and the atomic write portion of a transactional outbox. Includes complete JPA entities, repositories, commit/rollback tests, and reference PostgreSQL DDL. Requires Java 21 and Maven; tests use H2 without Docker.
 
 ## Getting Started
@@ -44,6 +45,8 @@ Open the example or project you want to explore and follow its README for prereq
 Java versions and build tools may differ between projects. Check the individual project requirements before running the code.
 
 ## Code and Articles
+
+Find my writing on [Medium](https://medium.com/@ahmettemelkundupoglu). Each example links to its companion article when published.
 
 The articles explain the reasoning; the code gives you something to experiment with.
 
@@ -74,6 +77,12 @@ Found a bug, an unclear explanation, or a useful alternative?
 
 Feel free to open an issue or submit a pull request. Suggestions for future Java topics are welcome too.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, verification commands, and the expected issue/PR details. GitHub Actions verifies both examples on pull requests and pushes to `main`.
+
 ---
 
 Written and maintained by [AhmetTK4](https://github.com/AhmetTK4).
+
+## License
+
+[MIT](LICENSE) — Copyright (c) 2026 Ahmet Temel Kundupoğlu.
