@@ -30,6 +30,7 @@ Some projects may use Spring Boot to demonstrate Java concepts through realistic
 
 - [JPA pagination](jpa-pagination/README.md) — Collection fetch pagination pitfalls, fail-fast configuration, ordered ID pagination, DTO mapping, and six integration tests with generated SQL checks. Java 21 and Maven; H2 without Docker.
 
+- [Stream patterns](stream-patterns/README.md) — Five Java Stream patterns applied to an API, with explicit business rules, HTTP examples, and service/controller/integration tests. Requires Java 21 and Maven; no external services are needed.
 - [Transactional events](transactional-events/README.md) — Spring’s `AFTER_COMMIT` lifecycle, the missing-audit-write problem, `REQUIRES_NEW`, atomic audit writes, and the atomic write portion of a transactional outbox. Includes complete JPA entities, repositories, commit/rollback tests, and reference PostgreSQL DDL. Requires Java 21 and Maven; tests use H2 without Docker.
 
 ## Getting Started
@@ -46,6 +47,11 @@ Open the example or project you want to explore and follow its README for prereq
 Java versions and build tools may differ between projects. Check the individual project requirements before running the code.
 
 ## Code and Articles
+
+Published companion articles:
+
+- [5 Practical Java Stream Patterns with Spring Boot and Java 21](https://medium.com/@ahmettemelkundupoglu/5-practical-java-stream-patterns-with-spring-boot-and-java-21-a7b6dae616b7) — [code and tests](stream-patterns/README.md)
+- [Spring’s @TransactionalEventListener: Why Your Code Runs but Your Data Doesn’t Save](https://medium.com/@ahmettemelkundupoglu/springs-transactionaleventlistener-why-your-code-runs-but-your-data-doesn-t-save-7d6e84710c40) — [code and tests](transactional-events/README.md)
 
 The articles explain the reasoning; the code gives you something to experiment with.
 
@@ -76,6 +82,12 @@ Found a bug, an unclear explanation, or a useful alternative?
 
 Feel free to open an issue or submit a pull request. Suggestions for future Java topics are welcome too.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, verification commands, and the expected issue/PR details. GitHub Actions verifies all examples on pull requests and pushes to `main`.
+
 ---
 
 Written and maintained by [AhmetTK4](https://github.com/AhmetTK4).
+
+## License
+
+[MIT](LICENSE) — Copyright (c) 2026 Ahmet Temel Kundupoğlu.
