@@ -28,6 +28,8 @@ Some projects may use Spring Boot to demonstrate Java concepts through realistic
 
 ## Examples
 
+- [JPA pagination](jpa-pagination/README.md) — Collection fetch pagination pitfalls, fail-fast configuration, ordered ID pagination, DTO mapping, and six integration tests with generated SQL checks. Java 21 and Maven; H2 without Docker.
+
 - [Transactional events](transactional-events/README.md) — Spring’s `AFTER_COMMIT` lifecycle, the missing-audit-write problem, `REQUIRES_NEW`, atomic audit writes, and the atomic write portion of a transactional outbox. Includes complete JPA entities, repositories, commit/rollback tests, and reference PostgreSQL DDL. Requires Java 21 and Maven; tests use H2 without Docker.
 
 ## Getting Started
