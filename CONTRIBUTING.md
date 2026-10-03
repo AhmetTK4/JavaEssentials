@@ -9,6 +9,7 @@ Install JDK 21 and Maven 3.6.3 or newer, then run from the repository root:
 ```sh
 mvn -B -f stream-patterns/pom.xml verify
 mvn -B -f transactional-events/pom.xml verify
+mvn -B -f jpa-pagination/pom.xml verify
 ```
 
 Tests use in-memory examples or H2; Docker is not required. Read the example's README before changing its behavior.

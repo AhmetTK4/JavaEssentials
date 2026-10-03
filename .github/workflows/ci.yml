@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [stream-patterns, transactional-events]
+        project: [stream-patterns, transactional-events, jpa-pagination]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
