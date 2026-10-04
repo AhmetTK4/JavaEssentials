@@ -4,12 +4,13 @@ This repository contains focused learning examples. Keep changes tied to a docum
 
 ## Local checks
 
-Install JDK 21 and Maven 3.6.3 or newer, then run from the repository root:
+Install Maven 3.6.3 or newer and the JDK required by each example (JDK 21 for the first three commands, JDK 25 for `scoped-values`), then run from the repository root:
 
 ```sh
 mvn -B -f stream-patterns/pom.xml verify
 mvn -B -f transactional-events/pom.xml verify
 mvn -B -f jpa-pagination/pom.xml verify
+mvn -B -f scoped-values/pom.xml verify
 ```
 
 Tests use in-memory examples or H2; Docker is not required. Read the example's README before changing its behavior.
