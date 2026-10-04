@@ -28,6 +28,8 @@ Some projects may use Spring Boot to demonstrate Java concepts through realistic
 
 ## Examples
 
+- [Scoped values](scoped-values/README.md) — Java 25 request-context propagation with `ScopedValue` and virtual threads, including automatic cleanup, nested rebinding, isolation tests, and a reproducible `ThreadLocal` stale-state example. No framework or external service.
+
 - [JPA pagination](jpa-pagination/README.md) — Collection fetch pagination pitfalls, fail-fast configuration, ordered ID pagination, DTO mapping, and six integration tests with generated SQL checks. Java 21 and Maven; H2 without Docker.
 
 - [Stream patterns](stream-patterns/README.md) — Five Java Stream patterns applied to an API, with explicit business rules, HTTP examples, and service/controller/integration tests. Requires Java 21 and Maven; no external services are needed.
