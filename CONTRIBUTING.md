@@ -10,6 +10,7 @@ Install Maven 3.6.3 or newer and the JDK required by each example (JDK 21 for th
 mvn -B -f stream-patterns/pom.xml verify
 mvn -B -f transactional-events/pom.xml verify
 mvn -B -f jpa-pagination/pom.xml verify
+mvn -B -f unexpected-rollback/pom.xml verify
 mvn -B -f scoped-values/pom.xml verify
 ```
 

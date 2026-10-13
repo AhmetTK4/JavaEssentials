@@ -34,6 +34,7 @@ Some projects may use Spring Boot to demonstrate Java concepts through realistic
 
 - [Stream patterns](stream-patterns/README.md) — Five Java Stream patterns applied to an API, with explicit business rules, HTTP examples, and service/controller/integration tests. Requires Java 21 and Maven; no external services are needed.
 - [Transactional events](transactional-events/README.md) — Spring’s `AFTER_COMMIT` lifecycle, the missing-audit-write problem, `REQUIRES_NEW`, atomic audit writes, and the atomic write portion of a transactional outbox. Includes complete JPA entities, repositories, commit/rollback tests, and reference PostgreSQL DDL. Requires Java 21 and Maven; tests use H2 without Docker.
+- [Unexpected rollback](unexpected-rollback/README.md) — Why catching a database exception inside `@Transactional` does not clear rollback-only state, and how moving the catch outside the failed transaction boundary preserves a separate audit write. Includes a failing-path integration test and the safe orchestration pattern. Requires Java 21 and Maven; tests use H2 without Docker.
 
 ## Getting Started
 
