@@ -36,6 +36,8 @@ Some projects may use Spring Boot to demonstrate Java concepts through realistic
 - [Transactional events](transactional-events/README.md) — Spring’s `AFTER_COMMIT` lifecycle, the missing-audit-write problem, `REQUIRES_NEW`, atomic audit writes, and the atomic write portion of a transactional outbox. Includes complete JPA entities, repositories, commit/rollback tests, and reference PostgreSQL DDL. Requires Java 21 and Maven; tests use H2 without Docker.
 - [Unexpected rollback](unexpected-rollback/README.md) — Why catching a database exception inside `@Transactional` does not clear rollback-only state, and how moving the catch outside the failed transaction boundary preserves a separate audit write. Includes a failing-path integration test and the safe orchestration pattern. Requires Java 21 and Maven; tests use H2 without Docker.
 
+- [Transactional self-invocation](transactional-self-invocation/README.md) — Same-bean calls bypass transaction advice: partial JDBC writes without an outer transaction, ignored `REQUIRES_NEW` inside one, and separate-bean fixes. Seven integration tests; Java 21, Spring Boot, and H2.
+
 ## Getting Started
 
 Clone the repository:

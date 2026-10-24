@@ -11,6 +11,7 @@ mvn -B -f stream-patterns/pom.xml verify
 mvn -B -f transactional-events/pom.xml verify
 mvn -B -f jpa-pagination/pom.xml verify
 mvn -B -f unexpected-rollback/pom.xml verify
+mvn -B -f transactional-self-invocation/pom.xml verify
 mvn -B -f scoped-values/pom.xml verify
 ```
 

@@ -20,6 +20,8 @@ jobs:
             java: '21'
           - project: unexpected-rollback
             java: '21'
+          - project: transactional-self-invocation
+            java: '21'
           - project: scoped-values
             java: '25'
     steps:
